@@ -85,6 +85,7 @@ function mc_decrypt($decrypt){
 
 
 function url_get($url,$cookie_jar_file,$fperm,$header){
+  if (!file_exists($cookie_jar_file)) $fperm="wb";
   $fp = fopen($cookie_jar_file, $fperm);
   $options = array(
     CURLOPT_HEADER => 1,   
