@@ -128,6 +128,7 @@ function url_get($url,$cookie_jar_file,$fperm,$header){
 }
 
 function url_post($url,$data,$cookie_jar_file,$fperm,$header){
+    if (!file_exists($cookie_jar_file)) $fperm="wb";
     $fields = '';
     foreach($data as $key => $value) { 
       $fields .= $key . '=' . $value . '&'; 
@@ -155,6 +156,8 @@ function url_post($url,$data,$cookie_jar_file,$fperm,$header){
 
     );
     //vd($options);
+    //die;
+    //vd($url);
     //die;
     $ch      = curl_init( $url );
     curl_setopt_array( $ch, $options );
