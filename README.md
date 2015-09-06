@@ -12,3 +12,11 @@
 *
 */
 ```
+## System installation
+System:
+```
+apt-get update & apt-get upgrade
+apt-get install git
+apt-get install php5-curl php5-sqlite php5-cli
+```
+
