@@ -15,7 +15,9 @@
 ## System installation
 ```
 apt-get update & apt-get upgrade
-apt-get install git
 apt-get install php5-curl php5-sqlite php5-cli
+
+apt-get install git
+git clone https://github.com/intrd/php-common/
 ```
 
