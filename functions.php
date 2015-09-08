@@ -47,42 +47,38 @@ function vd($var){
 	echo"</pre>";
 }
 
-/**
- * mc_encrypt - Highly Secure Data Encryption (MCrypt, Rijndael-256, and CBC)
- * @param  text $encrypt 
- * @return text          
- */
-function mc_encrypt($encrypt){
-	$key=ENCRYPTION_KEY;
-    $encrypt = serialize($encrypt);
-    $iv = mcrypt_create_iv(mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC), MCRYPT_DEV_URANDOM);
-    $key = pack('H*', $key);
-    $mac = hash_hmac('sha256', $encrypt, substr(bin2hex($key), -32));
-    $passcrypt = mcrypt_encrypt(MCRYPT_RIJNDAEL_256, $key, $encrypt.$mac, MCRYPT_MODE_CBC, $iv);
-    $encoded = base64_encode($passcrypt).'|'.base64_encode($iv);
-    return $encoded;
+function url_check( $url ){
+  if (filter_var($url, FILTER_VALIDATE_URL) === FALSE) { //checa se é uma url valida antes de jogar no curl
+    return "invalid and malformed URL";
+  }
+  $options = array(
+        CURLOPT_RETURNTRANSFER => true,     
+        CURLOPT_HEADER         => false,    
+        CURLOPT_FOLLOWLOCATION => true,    
+        CURLOPT_ENCODING       => "",       
+        CURLOPT_USERAGENT      => "Mozilla/5.0 (Windows NT 6.3; rv:36.0) Gecko/20100101 Firefox/36.0", 
+        CURLOPT_AUTOREFERER    => true,     
+        CURLOPT_CONNECTTIMEOUT => 120,      
+        CURLOPT_TIMEOUT        => 120,      
+        CURLOPT_MAXREDIRS      => 10,       
+        CURLOPT_SSL_VERIFYPEER => false     
+    );
+  $ch      = curl_init( $url );
+  curl_setopt_array( $ch, $options );
+  $content = curl_exec( $ch );
+  $err     = curl_errno( $ch );
+  $errmsg  = curl_error( $ch );
+  $header  = curl_getinfo( $ch );
+  curl_close( $ch );
+  $header['errno']   = $err;
+  $header['errmsg']  = $errmsg;
+  $header['content'] = $content;
+  if($header['http_code'] == 200){
+    return $header['http_code'];
+  }else{
+    return $header['errmsg'];
+  }
 }
-/**
- * mc_decrypt - Highly Secure Data Encryption (MCrypt, Rijndael-256, and CBC)
- * @param  text $decrypt 
- * @return text          
- */
-function mc_decrypt($decrypt){
-	$key=ENCRYPTION_KEY;
-    $decrypt = explode('|', $decrypt.'|');
-    $decoded = base64_decode($decrypt[0]);
-    $iv = base64_decode($decrypt[1]);
-    if(strlen($iv)!==mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC)){ return false; }
-    $key = pack('H*', $key);
-    $decrypted = trim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256, $key, $decoded, MCRYPT_MODE_CBC, $iv));
-    $mac = substr($decrypted, -64);
-    $decrypted = substr($decrypted, 0, -64);
-    $calcmac = hash_hmac('sha256', $decrypted, substr(bin2hex($key), -32));
-    if($calcmac!==$mac){ return false; }
-    $decrypted = unserialize($decrypted);
-    return $decrypted;
-}
-
 
 function url_get($url,$cookie_jar_file,$fperm,$header){
   if (!file_exists($cookie_jar_file)) $fperm="wb";
