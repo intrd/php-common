@@ -110,6 +110,8 @@ function url_get($url,$cookie_jar_file,$fperm,$header){
   $header  = curl_getinfo( $ch );
   curl_close( $ch );
   fclose($fp);
+  //vd($ch);
+  //die;
   $header['errno']   = $err;
   $header['errmsg']  = $errmsg;
   $header['content'] = $content;
@@ -200,6 +202,18 @@ function getInnerString($start,$end,$string){
   $result=explode($end,$result);
   $result=$result[0];
   return $result;
+}
+
+function array_zip_merge() {
+  $output = array();
+  // The loop incrementer takes each array out of the loop as it gets emptied by array_shift().
+  for ($args = func_get_args(); count($args); $args = array_filter($args)) {
+    // &$arg allows array_shift() to change the original.
+    foreach ($args as &$arg) {
+      $output[] = array_shift($arg);
+    }
+  }
+  return $output;
 }
 
 ?>
