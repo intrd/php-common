@@ -197,6 +197,8 @@ function getLastSubstring($string, $boundstring, $onlyalphanum=1) {
 }
 
 function getInnerString($start,$end,$string){
+  //echo $start;
+  //die;
   $result=explode($start,$string);
   $result=$result[1];
   $result=explode($end,$result);
