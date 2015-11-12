@@ -132,6 +132,8 @@ function url_post($url,$data,$cookie_jar_file,$fperm,$header){
       $fields .= $key . '=' . $value . '&'; 
     }
     //vd($fields);
+    //vd($url);
+    //die;
     rtrim($fields, '&');
     $fp = fopen($cookie_jar_file, $fperm);
     $options = array(
@@ -153,6 +155,8 @@ function url_post($url,$data,$cookie_jar_file,$fperm,$header){
         CURLOPT_SSL_VERIFYHOST => 0
 
     );
+
+    //echo $cookie_jar_file;
     //vd($options);
     //die;
     //vd($url);
@@ -171,13 +175,23 @@ function url_post($url,$data,$cookie_jar_file,$fperm,$header){
     //vd($header);
     $info["header"]=$header;
     $info["content"]=$content;
+    //vd($header['http_code']);
+    
+
     if($header['http_code'] == 200){
         return $info;
     }else{
+      //vd($header);
+      //die;
+      //vd($info);
+      //die;
+      //die;
+      //die;
         echo $header['errmsg'];
         return false;
     }
 }
+
 
 function getSubstring($username,$pos){
   $username=explode("/",$username);
