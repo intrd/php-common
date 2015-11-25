@@ -232,4 +232,25 @@ function array_zip_merge() {
   return $output;
 }
 
+function increase_percent($price, $percentage){
+  $price = $price * (1 + ($percentage/100));
+  return $price;
+}
+
+function fwrite_a($path,$text){
+  $file = fopen($path,"a");
+  fwrite($file,$text);
+  fclose($file);
+}
+
+
+function trimover($string,$qty){
+  if (strlen($string) > $qty){
+      $string = substr($string, 0, $qty);
+      $string .= "...";
+      return $string;
+  }else{
+    return $string;
+  }
+}
 ?>
