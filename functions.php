@@ -253,4 +253,14 @@ function trimover($string,$qty){
     return $string;
   }
 }
+
+function overtrim($string,$qty){
+  if (strlen($string) > $qty){
+      $string = substr($string, -$qty);
+      $string = "...".$string;
+      return $string;
+  }else{
+    return $string;
+  }
+}
 ?>
