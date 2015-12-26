@@ -80,7 +80,7 @@ function url_check( $url ){
   }
 }
 
-function url_get($url,$cookie_jar_file,$fperm,$header){
+function url_get($url,$cookie_jar_file,$fperm,$header,$proxy=false,$proxyauth=false){
   if (!file_exists($cookie_jar_file)) $fperm="wb";
   $fp = fopen($cookie_jar_file, $fperm);
   $options = array(
@@ -103,6 +103,10 @@ function url_get($url,$cookie_jar_file,$fperm,$header){
   //die;
   $ch      = curl_init( $url );
   curl_setopt_array( $ch, $options );
+  if($proxy){
+    curl_setopt($ch, CURLOPT_PROXY, $proxy);
+    if($proxyauth) curl_setopt($ch, CURLOPT_PROXYUSERPWD, $proxyauth);
+  }
   $content = curl_exec( $ch );
   //die;
   $err     = curl_errno( $ch );
@@ -125,7 +129,7 @@ function url_get($url,$cookie_jar_file,$fperm,$header){
   }
 }
 
-function url_post($url,$data,$cookie_jar_file,$fperm,$header){
+function url_post($url,$data,$cookie_jar_file,$fperm,$header,$proxy=false,$proxyauth=false){
     if (!file_exists($cookie_jar_file)) $fperm="wb";
     $fields = '';
     foreach($data as $key => $value) { 
@@ -163,6 +167,10 @@ function url_post($url,$data,$cookie_jar_file,$fperm,$header){
     //die;
     $ch      = curl_init( $url );
     curl_setopt_array( $ch, $options );
+    if($proxy){
+      curl_setopt($ch, CURLOPT_PROXY, $proxy);
+      if($proxyauth) curl_setopt($ch, CURLOPT_PROXYUSERPWD, $proxyauth);
+    }
     $content = curl_exec( $ch );
     $err     = curl_errno( $ch );
     $errmsg  = curl_error( $ch );
