@@ -80,7 +80,7 @@ function url_check( $url ){
   }
 }
 
-function url_get($url,$cookie_jar_file,$fperm,$header,$proxy=false,$proxyauth=false){
+function url_get($url,$cookie_jar_file,$fperm,$header,$proxy=false,$proxyauth=false,$oauth=false){
   if (!file_exists($cookie_jar_file)) $fperm="wb";
   $fp = fopen($cookie_jar_file, $fperm);
   $options = array(
@@ -106,6 +106,9 @@ function url_get($url,$cookie_jar_file,$fperm,$header,$proxy=false,$proxyauth=fa
   if($proxy){
     curl_setopt($ch, CURLOPT_PROXY, $proxy);
     if($proxyauth) curl_setopt($ch, CURLOPT_PROXYUSERPWD, $proxyauth);
+  }
+  if($oauth){
+    curl_setopt($ch, CURLOPT_USERPWD, $oauth);
   }
   $content = curl_exec( $ch );
   //die;
