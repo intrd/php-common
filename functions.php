@@ -265,6 +265,12 @@ function trimover($string,$qty){
   }
 }
 
+function file_checkstring($file,$string){
+  if( exec('grep '.escapeshellarg($string).' '.$file)) {
+    return true;
+  }
+}
+
 function overtrim($string,$qty){
   if (strlen($string) > $qty){
       $string = substr($string, -$qty);
