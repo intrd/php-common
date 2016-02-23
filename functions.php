@@ -12,6 +12,16 @@
 *
 */
 
+$semana = array(
+    'Sun' => 'Domingo', 
+    'Mon' => 'Segunda-Feira',
+    'Tue' => 'Terca-Feira',
+    'Wed' => 'Quarta-Feira',
+    'Thu' => 'Quinta-Feira',
+    'Fri' => 'Sexta-Feira',
+    'Sat' => 'Sábado'
+);
+
 /**
  * format_PostData - format _POST data to SQL INSERT format
  * @param  array $postdata
