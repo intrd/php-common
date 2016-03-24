@@ -264,6 +264,12 @@ function fwrite_a($path,$text){
   fclose($file);
 }
 
+function fwrite_w($path,$text){
+  $file = fopen($path,"w");
+  fwrite($file,$text);
+  fclose($file);
+}
+
 
 function trimover($string,$qty){
   if (strlen($string) > $qty){
