@@ -12,6 +12,35 @@
 *
 */
 
+function getDatesFromRange($start, $end) {
+    $interval = new DateInterval('P1D');
+
+    $realEnd = new DateTime($end);
+    $realEnd->add($interval);
+
+    $period = new DatePeriod(
+         new DateTime($start),
+         $interval,
+         $realEnd
+    );
+
+    foreach($period as $date) { 
+        $array[] = $date->format('Y-m-d'); 
+    }
+
+    return $array;
+}
+
+function get_browsers(){
+  $browsers[]="Mozilla/5.0 (Windows NT 6.3; rv:36.0) Gecko/20100101 Firefox/36.0";
+  $browsers[]="Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.80 Safari/537.36";
+  $browsers[]="Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36";
+  $browsers[]="Mozilla/5.0 (Windows NT 10.0; WOW64; rv:41.0) Gecko/20100101 Firefox/41.0";
+  $browsers[]="Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36";
+  $rr=rand(0,count($browsers)-1);
+  return $browsers[$rr];
+}
+
 $semana = array(
     'Sun' => 'Domingo', 
     'Mon' => 'Segunda-Feira',
