@@ -12,6 +12,74 @@
 *
 */
 
+/**
+* For safe multipart POST request for PHP5.3 ~ PHP 5.4.
+*
+* @param resource $ch cURL resource
+* @param array $assoc "name => value"
+* @param array $files "name => path"
+* @return bool
+*/
+function curl_custom_postfields($ch, array $assoc = array(), array $files = array()) {
+   
+    // invalid characters for "name" and "filename"
+    static $disallow = array("\0", "\"", "\r", "\n");
+   
+    // build normal parameters
+    foreach ($assoc as $k => $v) {
+        $k = str_replace($disallow, "_", $k);
+        $body[] = implode("\r\n", array(
+            "Content-Disposition: form-data; name=\"{$k}\"",
+            "",
+            filter_var($v),
+        ));
+    }
+   
+    // build file parameters
+    foreach ($files as $k => $v) {
+        switch (true) {
+            case false === $v = realpath(filter_var($v)):
+            case !is_file($v):
+            case !is_readable($v):
+                continue; // or return false, throw new InvalidArgumentException
+        }
+        $data = file_get_contents($v);
+        $v = call_user_func("end", explode(DIRECTORY_SEPARATOR, $v));
+        $k = str_replace($disallow, "_", $k);
+        $v = str_replace($disallow, "_", $v);
+        $body[] = implode("\r\n", array(
+            "Content-Disposition: form-data; name=\"{$k}\"; filename=\"{$v}\"",
+            "Content-Type: application/octet-stream",
+            "",
+            $data,
+        ));
+    }
+   
+    // generate safe boundary
+    do {
+        $boundary = "---------------------" . md5(mt_rand() . microtime());
+    } while (preg_grep("/{$boundary}/", $body));
+   
+    // add boundary for each parameters
+    array_walk($body, function (&$part) use ($boundary) {
+        $part = "--{$boundary}\r\n{$part}";
+    });
+   
+    // add final boundary
+    $body[] = "--{$boundary}--";
+    $body[] = "";
+   
+    // set options
+    return @curl_setopt_array($ch, array(
+        CURLOPT_POST       => true,
+        CURLOPT_POSTFIELDS => implode("\r\n", $body),
+        CURLOPT_HTTPHEADER => array(
+            "Expect: 100-continue",
+            "Content-Type: multipart/form-data; boundary={$boundary}", // change Content-Type
+        ),
+    ));
+}
+
 function getDatesFromRange($start, $end) {
     $interval = new DateInterval('P1D');
 
@@ -84,6 +152,21 @@ function vd($var){
 	echo"<pre>";
 	var_dump($var);
 	echo"</pre>";
+}
+
+function rem_tags($valor){
+  $valor=strip_tags($valor);
+  //$valor=str_replace("@","",$valor);
+  //$valor=str_replace("#","",$valor);
+  return $valor;
+}
+function rem_wrap($value){
+    $value=trim($value);
+    $vowels = array("\r\n", "\n", "\r");
+    $onlyconsonants = str_replace($vowels, "", $value);
+    $value=$onlyconsonants;
+    //$value=str_replace(":","",$value);
+    return $value;
 }
 
 function url_check( $url ){
@@ -171,16 +254,19 @@ function url_get($url,$cookie_jar_file,$fperm,$header,$proxy=false,$proxyauth=fa
   }
 }
 
-function url_post($url,$data,$cookie_jar_file,$fperm,$header,$proxy=false,$proxyauth=false){
+function url_post($url,$data,$cookie_jar_file,$fperm,$header,$proxy=false,$proxyauth=false,$debug=0,$img=false){
     if (!file_exists($cookie_jar_file)) $fperm="wb";
-    $fields = '';
-    foreach($data as $key => $value) { 
-      $fields .= $key . '=' . $value . '&'; 
+    if(!$img){
+      $fields = '';
+      foreach($data as $key => $value) { 
+        $fields .= $key . '=' . $value . '&'; 
+        rtrim($fields, '&');
+      }
+    }else{
+      $img = new CURLFile($data["filename"],'image/jpg',$data["name"]);
+      $fields["profile_pic"]=$img;
     }
-    //vd($fields);
-    //vd($url);
-    //die;
-    rtrim($fields, '&');
+    
     $fp = fopen($cookie_jar_file, $fperm);
     $options = array(
         CURLOPT_HEADER => 1,   
@@ -192,7 +278,7 @@ function url_post($url,$data,$cookie_jar_file,$fperm,$header,$proxy=false,$proxy
         CURLOPT_CONNECTTIMEOUT => 120,      
         CURLOPT_TIMEOUT        => 120,      
         CURLOPT_MAXREDIRS      => 10,      
-        CURLOPT_VERBOSE        => 0, 
+        CURLOPT_VERBOSE        => $debug, 
         CURLOPT_SSL_VERIFYPEER => false,
         CURLOPT_POST           => count($data),
         CURLOPT_POSTFIELDS     => $fields,
@@ -201,6 +287,8 @@ function url_post($url,$data,$cookie_jar_file,$fperm,$header,$proxy=false,$proxy
         CURLOPT_SSL_VERIFYHOST => 0
 
     );
+    //vd($options);
+    //die;
 
     //echo $cookie_jar_file;
     //vd($options);
@@ -261,6 +349,8 @@ function getLastSubstring($string, $boundstring, $onlyalphanum=1) {
 }
 
 function getInnerString($start,$end,$string){
+  //vd($string);
+  //die;
   //echo $start;
   //die;
   $result=explode($start,$string);
