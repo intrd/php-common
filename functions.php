@@ -319,14 +319,8 @@ function url_post($url,$data,$cookie_jar_file,$fperm,$header,$proxy=false,$proxy
     if($header['http_code'] == 200){
         return $info;
     }else{
-      //vd($header);
-      //die;
-      //vd($info);
-      //die;
-      //die;
-      //die;
-        vd($info);
-        return false;
+      vd($info);
+      return false;
     }
 }
 
