@@ -325,7 +325,7 @@ function url_post($url,$data,$cookie_jar_file,$fperm,$header,$proxy=false,$proxy
       //die;
       //die;
       //die;
-        echo $header['errmsg'];
+        vd($info);
         return false;
     }
 }
