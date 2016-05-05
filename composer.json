@@ -2,7 +2,7 @@
     "name": "intrd/php-common",
     "description": "php - intrd common functions",
     "keywords": ["php","intrd","common"],
-    "homepage": "http://github.com/intrd/php-common",
+    "homepage": "https://github.com/intrd/php-common",
     "authors": [
             {
                 "name": "intrd",
