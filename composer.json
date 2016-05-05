@@ -1,6 +1,5 @@
 {
     "name": "intrd/php-common",
-    "version": "1.1.0",
     "description": "php - intrd common functions",
     "keywords": ["php","intrd","common"],
     "homepage": "http://github.com/intrd/php-common",
