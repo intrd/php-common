@@ -320,7 +320,7 @@ function url_post($url,$data,$cookie_jar_file,$fperm,$header,$proxy=false,$proxy
         return $info;
     }else{
       vd($info);
-      return false;
+      return $info;
     }
 }
 
