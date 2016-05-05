@@ -424,4 +424,13 @@ function getIsoWeeksInYear($year) {
     $date->setISODate($year, 53);
     return ($date->format("W") === "53" ? 53 : 52);
 }
+
+function check_dir($array){
+  foreach($array as $path){
+    if (!file_exists($path)) {
+        mkdir($path, 0777, true);
+    }
+  }
+}
+
 ?>
