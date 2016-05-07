@@ -113,7 +113,8 @@ class intrdCommons {
     return $browsers[$rr];
   }
 
-  public $semana = array(
+  public function weekday_ptBR($D){
+    $ptBR = array(
       'Sun' => 'Domingo', 
       'Mon' => 'Segunda-Feira',
       'Tue' => 'Terca-Feira',
@@ -121,7 +122,9 @@ class intrdCommons {
       'Thu' => 'Quinta-Feira',
       'Fri' => 'Sexta-Feira',
       'Sat' => 'Sábado'
-  );
+    );
+    return $ptBR[$D];
+  }
 
   /**
    * format_PostData - format _POST data to SQL INSERT format
