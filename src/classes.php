@@ -3,7 +3,6 @@
  * php - intrd common functions
  * 
 * @package php-common
-* @category functions
 * @author intrd - http://dann.com.br/
 * @copyright 2016 intrd
 * @license Creative Commons Attribution-ShareAlike 4.0 - http://creativecommons.org/licenses/by-sa/4.0/
