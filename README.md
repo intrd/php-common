@@ -3,13 +3,12 @@
  * php - intrd common functions
  * 
 * @package php-common
-* @version 1.0
 * @category functions
 * @author intrd - http://dann.com.br/
-* @copyright 2015 intrd
-* @license http://creativecommons.org/licenses/by/4.0/
+* @copyright 2016 intrd
+* @license Creative Commons Attribution-ShareAlike 4.0 - http://creativecommons.org/licenses/by-sa/4.0/
 * @link https://github.com/intrd/php-common/
-* Dependencies: No
+* Version & Dependencies: See composer.json
 */
 ```
 ## System installation
