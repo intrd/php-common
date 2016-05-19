@@ -37,17 +37,11 @@ php - intrd common functions
 </span>
 <!-- @docbloc 1.1 -->
 
-## System installation
+## System & Composer installation
 ```
 $ sudo apt-get update & apt-get upgrade
-$ sudo apt-get install curl git php-curl php-cli
+$ sudo apt-get install curl php-curl php-cli
 $ curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer
-
-Now download the package..
-$ composer require intrd/php-common
-
-To check for update..
-$ composer update
 ```
 
 ## Usage sample
@@ -58,7 +52,11 @@ Assuming your project are running over `Composer` PSR-4 defaults, simply Require
     "intrd/php-common": ">=1.0.x-dev <dev-master"
 }
 ```
-Now Composer Autoload will instance this class and you are able to use..
+And run..
+```
+$ composer install -o
+```
+Now Composer Autoload will instance the class and you are able to use by this way..
 
 ```
 require __DIR__ . '/vendor/autoload.php';
