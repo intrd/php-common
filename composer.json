@@ -19,5 +19,11 @@
         "psr-4": {
             "php\\":"src/"
         }
+    },
+    "extra": {
+        "author_twitter":"intrd",
+        "copyright_author":"intrd",
+        "license_title":"Creative Commons Attribution-ShareAlike 4.0",
+        "license_url":"http://creativecommons.org/licenses/by-sa/4.0"
     }
 }

@@ -1,15 +1,17 @@
 <?php 
 /**
  * php - intrd common functions
- * 
-* @package php-common
-* @author intrd - http://dann.com.br/
-* @copyright 2016 intrd
-* @license Creative Commons Attribution-ShareAlike 4.0 - http://creativecommons.org/licenses/by-sa/4.0/
-* @link https://github.com/intrd/php-common/
-* Version & Dependencies: See composer.json
-*/
-
+* 
+* @package intrd/php-common
+* @version 1.0
+* @tags php, intrd, common
+* @link https://github.com/intrd/php-common
+* @author intrd - http://dann.com.br
+* @copyright (CC-BY-SA-4.0) 2016, intrd
+* @license Creative Commons Attribution-ShareAlike 4.0 - http://creativecommons.org/licenses/by-sa/4.0
+* Dependencies: 
+* - php >=5.3.0
+*** @docbloc 1.1 */
 
 namespace php;
 class intrdCommons {
