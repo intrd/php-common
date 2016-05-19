@@ -39,9 +39,32 @@ php - intrd common functions
 
 ## System installation
 ```
-apt-get update & apt-get upgrade
-apt-get install php5-curl php5-sqlite php5-cli php5-mcrypt
+$ sudo apt-get update & apt-get upgrade
+$ sudo apt-get install curl git php5-curl php5-cli
+$ curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer
 
-apt-get install git
-git clone https://github.com/intrd/php-common/
+Now download the package (Composer automatically install all dependencies)
+$ git clone https://github.com/intrd/php-common && cd php-common
+$ composer install -o
+
+To check for update..
+$ git pull && composer update
+```
+
+## Usage sample
+
+Assuming your project are running over `Composer`, simply Require it on your `composer.json`
+```
+"require": {
+    "intrd/php-common": ">=1.0.x-dev <dev-master"
+}
+```
+Now Composer PSR-4 Autoload will instance this class and you are able to use by this way..
+
+```
+require __DIR__ . '/vendor/autoload.php';
+use php\intrdCommons as i;
+
+$test="works!";
+i::vd($test);
 ```
