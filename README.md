@@ -54,7 +54,8 @@ Assuming your project are running over `Composer` PSR-4 defaults, simply Require
 ```
 And run..
 ```
-$ composer install -o
+$ composer install -o #to install
+$ composer update -o #to update
 ```
 Now Composer Autoload will instance the class and you are able to use by this way..
 
