@@ -57,6 +57,8 @@ And run..
 $ composer install -o #to install
 $ composer update -o #to update
 ```
+Always use -o to rebuild autoload.
+
 Now Composer Autoload will instance the class and you are able to use by this way..
 
 ```
