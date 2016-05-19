@@ -53,18 +53,18 @@ $ git pull && composer update
 
 ## Usage sample
 
-Assuming your project are running over `Composer`, simply Require it on your `composer.json`
+Assuming your project are running over `Composer` PSR-4 defaults, simply Require it on your `composer.json`
 ```
 "require": {
     "intrd/php-common": ">=1.0.x-dev <dev-master"
 }
 ```
-Now Composer PSR-4 Autoload will instance this class and you are able to use by this way..
+Now Composer Autoload will instance this class and you are able to use..
 
 ```
 require __DIR__ . '/vendor/autoload.php';
 use php\intrdCommons as i;
 
 $test="works!";
-i::vd($test);
+i::vd($test); //testing my var_dump() customized function
 ```
