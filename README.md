@@ -40,15 +40,14 @@ php - intrd common functions
 ## System installation
 ```
 $ sudo apt-get update & apt-get upgrade
-$ sudo apt-get install curl git php5-curl php5-cli
+$ sudo apt-get install curl git php-curl php-cli
 $ curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer
 
-Now download the package (Composer automatically install all dependencies)
-$ git clone https://github.com/intrd/php-common && cd php-common
-$ composer install -o
+Now download the package..
+$ composer require intrd/php-common
 
 To check for update..
-$ git pull && composer update
+$ composer update
 ```
 
 ## Usage sample
