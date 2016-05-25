@@ -1,1 +1,4 @@
 composer.lock
+vendors
+LOG/**
+TMP/**
